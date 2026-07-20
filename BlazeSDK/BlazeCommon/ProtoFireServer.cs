@@ -25,7 +25,7 @@ namespace BlazeCommon
         private CancellationTokenSource _cancellationTokenSource;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public ProtoFireServer(
+        protected ProtoFireServer(
             string name,
             IPEndPoint localEP,
             X509Certificate? cert,
@@ -37,17 +37,12 @@ namespace BlazeCommon
             Certificate = cert;
             ForceSsl = forceSsl;
 
-            _connections =
-                new ConcurrentDictionary<long, ProtoFireConnection>();
-
-            _cancellationTokenSource =
-                new CancellationTokenSource();
-
+            _connections = new ConcurrentDictionary<long, ProtoFireConnection>();
+            _cancellationTokenSource = new CancellationTokenSource();
             _nextConnectionId = 0;
         }
 
-        public void KillConnection(
-            ProtoFireConnection connection)
+        public void KillConnection(ProtoFireConnection connection)
         {
             if (connection.Connected)
             {
@@ -73,8 +68,8 @@ namespace BlazeCommon
 
             if (_cancellationTokenSource.IsCancellationRequested)
             {
-                _cancellationTokenSource =
-                    new CancellationTokenSource();
+                _cancellationTokenSource.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
             }
 
             try
@@ -128,30 +123,24 @@ namespace BlazeCommon
                     long clientId =
                         Interlocked.Increment(ref _nextConnectionId);
 
-                    Console.WriteLine(
-                       $"[{DateTime.Now:HH:mm:ss.fff}] Before constructor");
-
                     ProtoFireConnection connection =
                         new ProtoFireConnection(
                             clientId,
                             this,
                             socket);
 
-                    Console.WriteLine(
-                       $"[{DateTime.Now:HH:mm:ss.fff}] After constructor");
-
-                    await OnProtoFireConnectInternalAsync(
-                            connection)
-                        .ConfigureAwait(false);
-
-                    Console.WriteLine(
-                       $"[{DateTime.Now:HH:mm:ss.fff}] After connect initialization");
-
+                    // Do not let logging or connection callbacks delay
+                    // the FIFA client's already-sent preAuth packet.
+                    InitializeAcceptedConnection(connection);
                 }
             }
             catch (OperationCanceledException)
             {
                 // Normal shutdown.
+            }
+            catch (ObjectDisposedException)
+            {
+                // Listener was closed during shutdown.
             }
             finally
             {
@@ -168,8 +157,7 @@ namespace BlazeCommon
 
                 _nextConnectionId = 0;
 
-                foreach (ProtoFireConnection connection
-                         in _connections.Values)
+                foreach (ProtoFireConnection connection in _connections.Values)
                 {
                     connection.Disconnect();
                 }
@@ -178,7 +166,7 @@ namespace BlazeCommon
             }
         }
 
-        private async ValueTask OnProtoFireConnectInternalAsync(
+        private void InitializeAcceptedConnection(
             ProtoFireConnection connection)
         {
             if (!_connections.TryAdd(
@@ -189,13 +177,44 @@ namespace BlazeCommon
                 return;
             }
 
-            _logger.Info(
-                "Connection({ClientId}) accepted from {RemoteEP}.",
-                connection.ID,
-                connection.Socket.RemoteEndPoint);
+            if (!connection.Connected)
+                return;
 
+            if (Secure)
+            {
+                SslSocket.BeginAuthenticateAsServer(
+                    connection.Socket,
+                    Certificate,
+                    ForceSsl,
+                    AuthenticateAsServerCallback,
+                    connection);
+
+                _ = RunConnectCallbackAsync(connection);
+                return;
+            }
+
+            // Plaintext core server:
+            // attach the stream and begin reading before any potentially
+            // blocking logging/callback work.
+            connection.SetStream(
+                new NetworkStream(
+                    connection.Socket,
+                    ownsSocket: true));
+
+            _ = RunReceiveLoopAsync(connection);
+            _ = RunConnectCallbackAsync(connection);
+        }
+
+        private async Task RunConnectCallbackAsync(
+            ProtoFireConnection connection)
+        {
             try
             {
+                Console.WriteLine(
+                    $"[{DateTime.Now:HH:mm:ss.fff}] " +
+                    $"Connection({connection.ID}) accepted from " +
+                    $"{connection.Socket.RemoteEndPoint}");
+
                 await OnProtoFireConnectAsync(connection)
                     .ConfigureAwait(false);
             }
@@ -206,33 +225,6 @@ namespace BlazeCommon
                         ex)
                     .ConfigureAwait(false);
             }
-
-            if (!connection.Connected)
-                return;
-
-            if (Secure)
-            {
-                _logger.Info(
-                    "Authenticating as server for connection({ClientId}).",
-                    connection.ID);
-
-                SslSocket.BeginAuthenticateAsServer(
-                    connection.Socket,
-                    Certificate,
-                    ForceSsl,
-                    AuthenticateAsServerCallback,
-                    connection);
-
-                return;
-            }
-
-            // Plaintext core connection: do not pass it through FixedSsl.
-            connection.SetStream(
-                new NetworkStream(
-                    connection.Socket,
-                    ownsSocket: true));
-
-            _ = RunReceiveLoopAsync(connection);
         }
 
         private async void AuthenticateAsServerCallback(

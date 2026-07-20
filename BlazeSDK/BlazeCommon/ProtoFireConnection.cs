@@ -12,13 +12,6 @@ namespace BlazeCommon
         private const uint MaximumPayloadSize = 16 * 1024 * 1024;
         private const ushort MaximumMetadataSize = ushort.MaxValue;
 
-        /// <summary>
-        /// The framing assigned to newly accepted connections.
-        ///
-        /// Keep LegacyFireFrame as the library default so existing Zamboni
-        /// titles are not silently changed. FIFA 19 must set this to Fire2
-        /// before the core ProtoFireServer starts.
-        /// </summary>
         public static ProtoFireFraming DefaultFraming { get; set; } =
             ProtoFireFraming.LegacyFireFrame;
 
@@ -27,11 +20,9 @@ namespace BlazeCommon
         public Socket Socket { get; }
         public Stream? Stream { get; private set; }
         public bool Connected { get; private set; }
-
         public ProtoFireFraming Framing { get; set; }
 
-        private readonly SemaphoreSlim _sendLock =
-            new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _sendLock = new(1, 1);
 
         public ProtoFireConnection(
             long id,
@@ -59,8 +50,10 @@ namespace BlazeCommon
         public void SetStream(Stream stream)
         {
             if (Stream != null)
+            {
                 throw new InvalidOperationException(
-                    "Stream is already set");
+                    "Stream is already set.");
+            }
 
             Stream = stream;
         }
@@ -72,14 +65,13 @@ namespace BlazeCommon
 
             Connected = false;
 
-            // Stream owns the socket, so no separate socket close is needed.
             try
             {
                 Stream?.Close();
             }
             catch
             {
-                // Best-effort disconnect.
+                // Best-effort shutdown.
             }
 
             Owner?.KillConnection(this);
@@ -91,8 +83,10 @@ namespace BlazeCommon
                 return null;
 
             if (Stream == null)
+            {
                 throw new InvalidOperationException(
-                    "Stream is not set");
+                    "Stream is not set.");
+            }
 
             try
             {
@@ -102,7 +96,7 @@ namespace BlazeCommon
                     : await ReadLegacyPacketAsync(Stream)
                         .ConfigureAwait(false);
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }
@@ -114,8 +108,10 @@ namespace BlazeCommon
                 return null;
 
             if (Stream == null)
+            {
                 throw new InvalidOperationException(
-                    "Stream is not set");
+                    "Stream is not set.");
+            }
 
             try
             {
@@ -123,7 +119,7 @@ namespace BlazeCommon
                     ? ReadFire2Packet(Stream)
                     : ReadLegacyPacket(Stream);
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }
@@ -132,7 +128,7 @@ namespace BlazeCommon
         private static async Task<ProtoFirePacket?>
             ReadLegacyPacketAsync(Stream stream)
         {
-            FireFrame frame = new FireFrame();
+            FireFrame frame = new();
 
             if (!await stream.ReadAllAsync(
                     frame.Frame,
@@ -143,22 +139,21 @@ namespace BlazeCommon
                 return null;
             }
 
-            ushort extraFrameBytesNeeded =
-                frame.ExtraHeaderSize;
+            ushort extraHeaderSize = frame.ExtraHeaderSize;
 
             if (!await stream.ReadAllAsync(
                     frame.Frame,
                     FireFrame.MIN_HEADER_SIZE,
-                    extraFrameBytesNeeded)
+                    extraHeaderSize)
                 .ConfigureAwait(false))
             {
                 return null;
             }
 
-            uint payloadSize = frame.Size;
-            ValidatePayloadSize(payloadSize);
+            ValidatePayloadSize(frame.Size);
 
-            byte[] data = new byte[checked((int)payloadSize)];
+            byte[] data =
+                new byte[checked((int)frame.Size)];
 
             if (!await stream.ReadAllAsync(
                     data,
@@ -178,7 +173,7 @@ namespace BlazeCommon
         private static ProtoFirePacket?
             ReadLegacyPacket(Stream stream)
         {
-            FireFrame frame = new FireFrame();
+            FireFrame frame = new();
 
             if (!stream.ReadAll(
                     frame.Frame,
@@ -188,21 +183,20 @@ namespace BlazeCommon
                 return null;
             }
 
-            ushort extraFrameBytesNeeded =
-                frame.ExtraHeaderSize;
+            ushort extraHeaderSize = frame.ExtraHeaderSize;
 
             if (!stream.ReadAll(
                     frame.Frame,
                     FireFrame.MIN_HEADER_SIZE,
-                    extraFrameBytesNeeded))
+                    extraHeaderSize))
             {
                 return null;
             }
 
-            uint payloadSize = frame.Size;
-            ValidatePayloadSize(payloadSize);
+            ValidatePayloadSize(frame.Size);
 
-            byte[] data = new byte[checked((int)payloadSize)];
+            byte[] data =
+                new byte[checked((int)frame.Size)];
 
             if (!stream.ReadAll(data, 0, data.Length))
                 return null;
@@ -214,12 +208,9 @@ namespace BlazeCommon
         }
 
         private static async Task<ProtoFirePacket?>
-    ReadFire2PacketAsync(Stream stream)
+            ReadFire2PacketAsync(Stream stream)
         {
             byte[] header = new byte[Fire2HeaderSize];
-
-            Console.WriteLine(
-                $"[{DateTime.Now:HH:mm:ss.fff}] Waiting for Fire2 header...");
 
             if (!await stream.ReadAllAsync(
                     header,
@@ -230,12 +221,11 @@ namespace BlazeCommon
                 return null;
             }
 
-            Console.WriteLine(
-                $"[{DateTime.Now:HH:mm:ss.fff}] Fire2 header received.");
+            Fire2Header parsed =
+                ParseFire2Header(header);
 
-            Fire2Header parsed = ParseFire2Header(header);
-
-            byte[] metadata = new byte[parsed.MetadataSize];
+            byte[] metadata =
+                new byte[parsed.MetadataSize];
 
             if (!await stream.ReadAllAsync(
                     metadata,
@@ -258,13 +248,17 @@ namespace BlazeCommon
                 return null;
             }
 
-            return CreateFire2Packet(parsed, metadata, data);
+            return CreateFire2Packet(
+                parsed,
+                metadata,
+                data);
         }
 
         private static ProtoFirePacket?
             ReadFire2Packet(Stream stream)
         {
-            byte[] header = new byte[Fire2HeaderSize];
+            byte[] header =
+                new byte[Fire2HeaderSize];
 
             if (!stream.ReadAll(
                     header,
@@ -274,7 +268,8 @@ namespace BlazeCommon
                 return null;
             }
 
-            Fire2Header parsed = ParseFire2Header(header);
+            Fire2Header parsed =
+                ParseFire2Header(header);
 
             byte[] metadata =
                 new byte[parsed.MetadataSize];
@@ -293,7 +288,10 @@ namespace BlazeCommon
             if (!stream.ReadAll(data, 0, data.Length))
                 return null;
 
-            return CreateFire2Packet(parsed, metadata, data);
+            return CreateFire2Packet(
+                parsed,
+                metadata,
+                data);
         }
 
         private static Fire2Header ParseFire2Header(
@@ -325,6 +323,7 @@ namespace BlazeCommon
                 header[12];
 
             byte typeAndUserIndex = header[13];
+
             byte messageType =
                 (byte)(typeAndUserIndex >> 5);
 
@@ -348,7 +347,7 @@ namespace BlazeCommon
             byte[] metadata,
             byte[] data)
         {
-            FireFrame frame = new FireFrame
+            FireFrame frame = new()
             {
                 Size = parsed.PayloadSize,
                 Component = parsed.Component,
@@ -356,10 +355,6 @@ namespace BlazeCommon
                 MsgNum = parsed.MessageNumber,
                 MsgType =
                     (FireFrame.MessageType)parsed.MessageType,
-
-                // The legacy FireFrame class stores four user-index bits.
-                // FIFA's observed packets use index zero, so this conversion
-                // is lossless for the current client.
                 UserIndex =
                     (byte)(parsed.UserIndex & 0x0F)
             };
@@ -445,32 +440,31 @@ namespace BlazeCommon
                 return false;
 
             if (Stream == null)
+            {
                 throw new InvalidOperationException(
-                    "Stream is not set");
+                    "Stream is not set.");
+            }
 
-            bool success = false;
             _sendLock.Wait();
 
             try
             {
                 packet.WriteTo(Stream, Framing);
                 Stream.Flush();
-                success = true;
+                return true;
             }
             catch (ObjectDisposedException)
             {
-                success = false;
+                return false;
             }
             catch (IOException)
             {
-                success = false;
+                return false;
             }
             finally
             {
-                Semaphore.Release();
+                _sendLock.Release();
             }
-
-            return success;
         }
 
         public async Task<bool> SendAsync(
@@ -480,36 +474,38 @@ namespace BlazeCommon
                 return false;
 
             if (Stream == null)
+            {
                 throw new InvalidOperationException(
-                    "Stream is not set");
+                    "Stream is not set.");
+            }
 
-            bool success = false;
-            await _sendLock.WaitAsync();.ConfigureAwait(false);
+            await _sendLock.WaitAsync()
+                .ConfigureAwait(false);
 
             try
             {
-                await packet.WriteToAsync(Stream, Framing)
+                await packet.WriteToAsync(
+                        Stream,
+                        Framing)
                     .ConfigureAwait(false);
 
                 await Stream.FlushAsync()
                     .ConfigureAwait(false);
 
-                success = true;
+                return true;
             }
             catch (ObjectDisposedException)
             {
-                success = false;
+                return false;
             }
             catch (IOException)
             {
-                success = false;
+                return false;
             }
             finally
             {
                 _sendLock.Release();
             }
-
-            return success;
         }
 
         private static async Task<Socket?>
@@ -518,7 +514,8 @@ namespace BlazeCommon
                 int port)
         {
             IPHostEntry host =
-                Dns.GetHostEntry(hostname);
+                await Dns.GetHostEntryAsync(hostname)
+                    .ConfigureAwait(false);
 
             if (host.AddressList.Length == 0)
                 return null;
@@ -527,9 +524,9 @@ namespace BlazeCommon
                 host.AddressList[0];
 
             IPEndPoint remoteEndpoint =
-                new IPEndPoint(ipAddress, port);
+                new(ipAddress, port);
 
-            Socket socket = new Socket(
+            Socket socket = new(
                 ipAddress.AddressFamily,
                 SocketType.Stream,
                 ProtocolType.Tcp);
@@ -541,8 +538,9 @@ namespace BlazeCommon
 
                 return socket;
             }
-            catch (Exception)
+            catch
             {
+                socket.Dispose();
                 return null;
             }
         }
@@ -561,11 +559,13 @@ namespace BlazeCommon
                 return null;
 
             Stream stream =
-                new NetworkStream(socket, ownsSocket: true);
+                new NetworkStream(
+                    socket,
+                    ownsSocket: true);
 
             if (ssl)
             {
-                SslStream sslStream = new SslStream(
+                SslStream sslStream = new(
                     stream,
                     leaveInnerStreamOpen: false,
                     RemoteCertificateVerify);
@@ -582,7 +582,7 @@ namespace BlazeCommon
             }
 
             ProtoFireConnection connection =
-                new ProtoFireConnection(socket);
+                new(socket);
 
             connection.SetStream(stream);
             return connection;
@@ -599,7 +599,7 @@ namespace BlazeCommon
             if (host.AddressList.Length == 0)
                 return null;
 
-            SecurityOptions options = new SecurityOptions(
+            SecurityOptions options = new(
                 SecureProtocol.Ssl3 | SecureProtocol.Tls1,
                 null!,
                 ConnectionEnd.Client,
@@ -610,22 +610,24 @@ namespace BlazeCommon
                 SslAlgorithms.ALL,
                 null!);
 
-            SecureSocket socket = new SecureSocket(
+            SecureSocket secureSocket = new(
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
                 ProtocolType.Tcp,
                 options);
 
-            socket.Connect(
-                new IPEndPoint(host.AddressList[0], port));
+            secureSocket.Connect(
+                new IPEndPoint(
+                    host.AddressList[0],
+                    port));
 
             ProtoFireConnection connection =
-                new ProtoFireConnection(null!);
+                new(null!);
 
             connection.SetStream(
                 new SecureNetworkStream(
-                    socket,
-                    true));
+                    secureSocket,
+                    ownsSocket: true));
 
             return connection;
         }
@@ -635,7 +637,7 @@ namespace BlazeCommon
                 long address,
                 int port)
         {
-            SecurityOptions options = new SecurityOptions(
+            SecurityOptions options = new(
                 SecureProtocol.Ssl3 | SecureProtocol.Tls1,
                 null!,
                 ConnectionEnd.Client,
@@ -646,22 +648,22 @@ namespace BlazeCommon
                 SslAlgorithms.SECURE_CIPHERS,
                 null!);
 
-            SecureSocket socket = new SecureSocket(
+            SecureSocket secureSocket = new(
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
                 ProtocolType.Tcp,
                 options);
 
-            socket.Connect(
+            secureSocket.Connect(
                 new IPEndPoint(address, port));
 
             ProtoFireConnection connection =
-                new ProtoFireConnection(null!);
+                new(null!);
 
             connection.SetStream(
                 new SecureNetworkStream(
-                    socket,
-                    true));
+                    secureSocket,
+                    ownsSocket: true));
 
             return connection;
         }

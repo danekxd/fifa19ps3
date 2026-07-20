@@ -56,11 +56,11 @@ internal class UtilComponent : UtilComponentBase.Server
                 }
             },
             mEEFA = true,
-            mESRC = request.mClientData.mServiceName;
-            mINST = request.mClientData.mServiceName;
+            mESRC = request.mClientData.mServiceName,
+            mINST = request.mClientData.mServiceName,
             mUnderageSupported = false,
             mPersonaNamespace = "cem_ea_id",
-            mLegalDocGameIdentifier = request.mClientData.mServiceName;
+            mLegalDocGameIdentifier = request.mClientData.mServiceName,
             mPlatform = "ps3",
             mQosSettings = new QosConfigInfo
             {
@@ -76,7 +76,7 @@ internal class UtilComponent : UtilComponentBase.Server
             },
             mRegistrationSource = "303107",
             mServerVersion = Program.Name
-        })
+        });
     }
 
     public override Task<PostAuthResponse> PostAuthAsync(NullStruct request, BlazeRpcContext context)
