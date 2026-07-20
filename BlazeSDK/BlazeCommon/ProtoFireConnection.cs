@@ -90,6 +90,12 @@ namespace BlazeCommon
             if (!Connected)
                 return null;
 
+            Console.WriteLine(
+    $"[{DateTime.Now:HH:mm:ss.fff}] Waiting for Fire2 header...");
+
+            Console.WriteLine(
+    $"[{DateTime.Now:HH:mm:ss.fff}] Fire2 header received.");
+
             if (Stream == null)
                 throw new InvalidOperationException(
                     "Stream is not set");

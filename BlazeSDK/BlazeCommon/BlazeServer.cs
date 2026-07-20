@@ -78,6 +78,8 @@ namespace BlazeCommon
             {
                 case FireFrame.MessageType.MESSAGE:
                     type = component.GetCommandRequestType(frame.Command);
+                    Console.WriteLine(
+    $"[{DateTime.Now:HH:mm:ss.fff}] Processing Component={message.Component} Command={message.Command}");
                     break;
                 case FireFrame.MessageType.REPLY:
                     type = component.GetCommandResponseType(frame.Command);

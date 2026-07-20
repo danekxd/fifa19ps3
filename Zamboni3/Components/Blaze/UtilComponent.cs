@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Blaze3SDK.Blaze;
 using Blaze3SDK.Blaze.Util;
 using Blaze3SDK.Components;
@@ -11,6 +12,8 @@ internal class UtilComponent : UtilComponentBase.Server
 {
     public override Task<PreAuthResponse> PreAuthAsync(PreAuthRequest request, BlazeRpcContext context)
     {
+        Console.WriteLine(
+    $"[{DateTime.Now:HH:mm:ss.fff}] Entered PreAuthAsync");
         string serviceName = request.mClientData.mServiceName;
 
         if (string.IsNullOrWhiteSpace(serviceName))
@@ -20,6 +23,7 @@ internal class UtilComponent : UtilComponentBase.Server
 
         var pingSitesConfig = Program.ZamboniConfig.Relays;
         var responsePingSites = new SortedDictionary<string, QosPingSiteInfo>();
+
         foreach (var configSection in pingSitesConfig)
         {
             responsePingSites.Add(configSection.Key, new QosPingSiteInfo
@@ -29,6 +33,9 @@ internal class UtilComponent : UtilComponentBase.Server
                 mSiteName = configSection.Key
             });
         }
+
+        Console.WriteLine(
+    $"[{DateTime.Now:HH:mm:ss.fff}] Leaving PreAuthAsync");
 
         return Task.FromResult(new PreAuthResponse
         {
@@ -76,18 +83,6 @@ internal class UtilComponent : UtilComponentBase.Server
     {
         return Task.FromResult(new PostAuthResponse
         {
-            // mPssConfig = new PssConfig
-            // {
-            //     mAddress = Program.GameServerIp,
-            //     mInitialReportTypes = PssReportTypes.None,
-            //     mNpCommSignature = new byte[]
-            //     {
-            //     },
-            //     mOfferIds = new List<string>(),
-            //     mPort = 7667,
-            //     mProjectId = "",
-            //     mTitleId = 0
-            // },
             mTelemetryServer = GetTele(),
             mTickerServer = GetTicker(),
             mUserOptions = new UserOptions
@@ -102,7 +97,12 @@ internal class UtilComponent : UtilComponentBase.Server
     {
         var time = Util.TimeNow();
         var serverPlayer = ServerManager.GetServerPlayerByConnectionId(context.Connection.ID);
-        if (serverPlayer != null) serverPlayer.LastPingedTime = time;
+
+        if (serverPlayer != null)
+        {
+            serverPlayer.LastPingedTime = time;
+        }
+
         return Task.FromResult(new PingResponse
         {
             mServerTime = time
@@ -127,12 +127,14 @@ internal class UtilComponent : UtilComponentBase.Server
     {
         var serverPlayer = ServerManager.GetServerPlayerByConnectionId(context.Connection.ID)!;
         serverPlayer.UserSettings.TryGetValue(request.mKey, out var value);
+
         return Task.FromResult(new UserSettingsResponse
         {
-            mData = value == null ? "" : value,
+            mData = value ?? "",
             mKey = request.mKey
         });
     }
+
     public override Task<NullStruct> UserSettingsSaveAsync(UserSettingsSaveRequest request, BlazeRpcContext context)
     {
         var serverPlayer = ServerManager.GetServerPlayerByConnectionId(context.Connection.ID)!;
@@ -140,7 +142,7 @@ internal class UtilComponent : UtilComponentBase.Server
         return Task.FromResult(new NullStruct());
     }
 
-    private GetTelemetryServerResponse GetTele()
+    private static GetTelemetryServerResponse GetTele()
     {
         return new GetTelemetryServerResponse
         {
@@ -159,7 +161,7 @@ internal class UtilComponent : UtilComponentBase.Server
         };
     }
 
-    private GetTickerServerResponse GetTicker()
+    private static GetTickerServerResponse GetTicker()
     {
         return new GetTickerServerResponse
         {
@@ -169,32 +171,9 @@ internal class UtilComponent : UtilComponentBase.Server
         };
     }
 
-
-    public override Task<FetchConfigResponse> FetchClientConfigAsync(
-    FetchClientConfigRequest request,
-    BlazeRpcContext context)
+    public override Task<FetchConfigResponse> FetchClientConfigAsync(FetchClientConfigRequest request, BlazeRpcContext context)
     {
         var config = new SortedDictionary<string, string>();
-
-        void AddIdentitySettings()
-        {
-            config["ENABLED_CLIENT_OAUTH"] = "1";
-
-            config["nucleusConnect"] =
-                "fifa19.identity.local";
-
-            config["OAUTH_CLIENT_ID"] =
-                "7B55TLPPGXWMGRZ";
-
-            config["OAUTH_REDIRECT_URI"] =
-                "nucleus:rest";
-
-            config["OAUTH_CODE_RETRIES"] =
-                "3";
-
-            config["OAUTH_CODE_MEMORY_SIZE"] =
-                "4096";
-        }
 
         switch (request.mConfigSection)
         {
@@ -203,7 +182,7 @@ internal class UtilComponent : UtilComponentBase.Server
             case "OSDK_NUCLEUS":
             case "IdentityParams":
             case "LegalParams":
-                AddIdentitySettings();
+                AddIdentitySettings(config);
                 break;
 
             case "OSDK_WEBOFFER":
@@ -215,6 +194,15 @@ internal class UtilComponent : UtilComponentBase.Server
         {
             mConfig = config
         });
+    }
+
+    private static void AddIdentitySettings(SortedDictionary<string, string> config)
+    {
+        config["ENABLED_CLIENT_OAUTH"] = "1";
+        config["nucleusConnect"] = "http://fifa19.identity.local:8082";
+        config["OAUTH_CLIENT_ID"] = "7B55TLPPGXWMGRZ";
+        config["OAUTH_REDIRECT_URI"] = "nucleus:rest";
+        config["display"] = "console2/welcome";
     }
 
     public override Task<LocalizeStringsResponse> LocalizeStringsAsync(LocalizeStringsRequest request, BlazeRpcContext context)
@@ -236,18 +224,20 @@ internal class UtilComponent : UtilComponentBase.Server
         var response = new List<FilteredUserText>();
 
         foreach (var filteredUserText in request.mFilteredTextList)
+        {
             response.Add(new FilteredUserText
             {
                 mFilteredText = filteredUserText.mFilteredText,
                 mResult = FilterResult.FILTER_RESULT_PASSED
             });
+        }
 
         return Task.FromResult(new FilterUserTextResponse
         {
             mFilteredTextList = response
         });
     }
-    
+
     public override Task<NullStruct> SetClientMetricsAsync(ClientMetrics request, BlazeRpcContext context)
     {
         return Task.FromResult(new NullStruct());

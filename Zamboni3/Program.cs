@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using Blaze3SDK;
 using BlazeCommon;
 using NLog;
@@ -29,6 +30,16 @@ internal class Program
     public static string GameServerIp;
 
     private static ZamboniCoreServer core;
+
+    ThreadPool.GetMinThreads(
+    out int workerThreads,
+    out int completionPortThreads);
+
+    ThreadPool.SetMinThreads(
+        Math.Max(workerThreads, 16),
+    Math.Max(completionPortThreads, 16));
+
+Console.WriteLine("ThreadPool minimum threads set.");
 
     private static async Task Main(string[] args)
     {
