@@ -91,9 +91,22 @@ namespace BlazeCommon
     socket.RemoteEndPoint);
                     
                     long clientId = Interlocked.Increment(ref _nextConnectionId);
+                    Console.WriteLine(
+                        $"[{DateTime.Now:HH:mm:ss.fff}] Before ProtoFireConnection ctor");
 
-                    ProtoFireConnection connection = new ProtoFireConnection(clientId, this, socket);
-                    await OnProtoFireConnectInternalAsync(connection).ConfigureAwait(false);
+                    ProtoFireConnection connection =
+                        new ProtoFireConnection(
+                            clientId,
+                            this,
+                            socket);
+
+                    Console.WriteLine(
+                        $"[{DateTime.Now:HH:mm:ss.fff}] After ProtoFireConnection ctor");
+
+                    await OnProtoFireConnectInternalAsync(connection);
+
+                    Console.WriteLine(
+                        $"[{DateTime.Now:HH:mm:ss.fff}] After OnProtoFireConnectInternalAsync");
                 }
             }
             catch (OperationCanceledException) { }
