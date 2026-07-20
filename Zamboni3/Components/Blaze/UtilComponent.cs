@@ -56,11 +56,11 @@ internal class UtilComponent : UtilComponentBase.Server
                 }
             },
             mEEFA = true,
-            mESRC = serviceName,
-            mINST = serviceName,
+            mESRC = request.mClientData.mServiceName;
+            mINST = request.mClientData.mServiceName;
             mUnderageSupported = false,
             mPersonaNamespace = "cem_ea_id",
-            mLegalDocGameIdentifier = serviceName,
+            mLegalDocGameIdentifier = request.mClientData.mServiceName;
             mPlatform = "ps3",
             mQosSettings = new QosConfigInfo
             {
@@ -76,7 +76,7 @@ internal class UtilComponent : UtilComponentBase.Server
             },
             mRegistrationSource = "303107",
             mServerVersion = Program.Name
-        });
+        })
     }
 
     public override Task<PostAuthResponse> PostAuthAsync(NullStruct request, BlazeRpcContext context)
@@ -202,7 +202,6 @@ internal class UtilComponent : UtilComponentBase.Server
         config["nucleusConnect"] = "http://fifa19.identity.local:8082";
         config["OAUTH_CLIENT_ID"] = "7B55TLPPGXWMGRZ";
         config["OAUTH_REDIRECT_URI"] = "nucleus:rest";
-        config["display"] = "console2/welcome";
     }
 
     public override Task<LocalizeStringsResponse> LocalizeStringsAsync(LocalizeStringsRequest request, BlazeRpcContext context)
