@@ -1,0 +1,586 @@
+# packs.yml - HUT Pack Configuration
+# Loot:
+#   Guaranteed: always awarded, Count per CardType with optional Filters
+#   Randomized: weighted pools, Weights are relative (don't need to sum to 100)
+#   Limits: max times a CardType can appear in randomized rolls
+# Filters: Rating/Zcat {RangeStart, RangeEnd} | Rare: 0/1 | IsAway: bool | PreferredPosition: int
+# Zcat: db sub-category column used to separate card tiers within a CardType
+# Zrating, zvictory, zlegendary, filter on real rating or card visuals
+# CardTypes: Player, Coach, Kit, Badge, Stadium, Contract, Training, Healing
+Packs:
+  #Starer pack
+  - PackId: 1
+    PackStoreId: 0
+    CoinCost: 0
+    Attributes: 0
+    Availability: 0
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 0
+    Loot:
+      Guaranteed:
+        - CardType: Kit
+          Count: 1
+          Filters:
+            IsAway: true
+            Alternative: false
+        - CardType: Kit
+          Count: 1
+          Filters:
+            IsAway: false
+            Alternative: false
+        - CardType: Badge
+          Count: 1
+        - CardType: Stadium
+          Count: 1
+          Filters:
+            Zcat:
+              RangeStart: 0
+              RangeEnd: 0
+        - CardType: Training
+          Count: 1
+          Filters:
+            Zcat:
+              RangeStart: 0
+              RangeEnd: 0
+        - CardType: Contract
+          Count: 1
+          Filters:
+            Zcat:
+              RangeStart: 0
+              RangeEnd: 0
+        - CardType: Player
+          Count: 2
+          Filters:
+            PreferredPosition: 5
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            Rare: 0
+        - CardType: Player
+          Count: 4
+          Filters:
+            PreferredPosition: 4
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            Rare: 0
+        - CardType: Player
+          Count: 3
+          Filters:
+            PreferredPosition: 3
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            Rare: 0
+        - CardType: Player
+          Count: 4
+          Filters:
+            PreferredPosition: 2
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            Rare: 0
+        - CardType: Player
+          Count: 4
+          Filters:
+            PreferredPosition: 1
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            Rare: 0
+        - CardType: Player
+          Count: 5
+          Filters:
+            PreferredPosition: 0
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 80
+            rare: 0
+  #Peewee pack
+  - PackId: 2
+    PackStoreId: 1
+    CoinCost: 350
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Guaranteed:
+        - CardType: Player
+          Count: 4
+          Filters:
+            ZRating:
+              RangeStart: 0
+              RangeEnd: 77
+      Randomized:
+        - Count: 3
+          Weights:
+            Player: 25
+            Training: 35
+            Healing: 5
+            Contract: 35
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 70
+                  RangeEnd: 77
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 1
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 1
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 0
+  #Standard pack
+  - PackId: 5
+    PackStoreId: 4
+    CoinCost: 1000
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Guaranteed:
+        - CardType: Player
+          Count: 6
+          Filters:
+            ZRating:
+              RangeStart: 68
+              RangeEnd: 84
+            Rare: 0
+      Randomized:
+        - Count: 6
+          Weights:
+            Player: 12
+            Training: 29
+            Contract: 29
+            Kit: 15
+            Badge: 15
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 0
+                  RangeEnd: 82
+                Rare: 1
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 2
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 1
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: false
+            - Category: Badge
+              CardType: Badge
+  #Premium pack
+  - PackId: 8
+    PackStoreId: 7
+    CoinCost: 2500
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Limits:
+        Coach: 1
+        Stadium: 1
+      Guaranteed:
+        - CardType: Player
+          Count: 4
+          Filters:
+            ZRating:
+              RangeStart: 70
+              RangeEnd: 84
+      Randomized:
+        - Count: 6
+          Weights:
+            Player: 45
+            Training: 20
+            Healing: 6
+            Contract: 20
+            Coach: 1.5
+            Stadium: 1.5
+            Kit: 3
+            Badge: 3
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 70
+                  RangeEnd: 84
+                Rare: 0
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 2
+                  RangeEnd: 3
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 2
+                  RangeEnd: 3
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 1
+                  RangeEnd: 3
+            - Category: Coach
+              CardType: Coach
+              Filters:
+                Rare: 0
+            - Category: Stadium
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 3
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: false
+        - Count: 4
+          Weights:
+            Player: 17
+            Training: 35
+            Healing: 10
+            Contract: 23
+            Coach: 1
+            Stadium: 0.1
+            Kit: 13.9
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 0
+                  RangeEnd: 84
+                Rare: 1
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Coach
+              CardType: Coach
+              Filters:
+                Rare: 1
+            - Category: Stadium
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: true
+            - Category: Badge
+              CardType: Badge
+  #Jumbo pack
+  - PackId: 9
+    PackStoreId: 8
+    CoinCost: 5000
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Limits:
+        Coach: 1
+        Stadium: 1
+      Guaranteed:
+        - CardType: Player
+          Count: 6
+          Filters:
+            ZRating:
+              RangeStart: 71
+              RangeEnd: 88
+            Rare: 0
+      Randomized:
+        - Count: 12
+          Weights:
+            Player: 34
+            Training: 22
+            Healing: 13
+            Contract: 22
+            Coach: 1.5
+            Stadium: 1.5
+            Kit: 3
+            Badge: 3
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 73
+                  RangeEnd: 84
+              Rare: 0
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 2
+                  RangeEnd: 3
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 2
+                  RangeEnd: 3
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 1
+                  RangeEnd: 3
+            - Category: Coach
+              CardType: Coach
+              Filters:
+                Rare: 0
+            - Category: Stadium
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 3
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: false
+        - Count: 4
+          Weights:
+            Player: 28.5
+            Training: 37
+            Healing: 8
+            Contract: 20
+            Coach: 1
+            Stadium: 0.5
+            Kit: 5
+          Items:
+            - Category: Player
+              CardType: Player
+              Filters:
+                ZRating:
+                  RangeStart: 80
+                  RangeEnd: 100
+                Rare: 1
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Coach
+              CardType: Coach
+              Filters:
+                Rare: 1
+            - Category: Stadium
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: true
+            - Category: Badge
+              CardType: Badge
+  #Consumable pack
+  - PackId: 13
+    PackStoreId: 12
+    CoinCost: 250
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Randomized:
+        - Count: 4
+          Weights:
+            Training: 50
+            Healing: 10
+            Contract: 40
+          Items:
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 2
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 2
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 2
+        - Count: 2
+          Weights:
+            Training: 50
+            Training4: 5
+            TrainingPos: 15
+            Healing: 10
+            Contract: 20
+          Items:
+            - Category: Training
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 2
+            - Category: Training4
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4
+            - Category: TrainingPos
+              CardType: Training
+              Filters:
+                Zcat:
+                  RangeStart: 3
+                  RangeEnd: 3
+            - Category: Healing
+              CardType: Healing
+              Filters:
+                Zcat:
+                  RangeStart: 3
+                  RangeEnd: 4
+            - Category: Contract
+              CardType: Contract
+              Filters:
+                Zcat:
+                  RangeStart: 3
+                  RangeEnd: 4
+  #Team items pack
+  - PackId: 25
+    PackStoreId: 24
+    CoinCost: 400
+    Attributes: 0
+    Availability: 1
+    StartDate: 0
+    EndDate: 0
+    Quantity: 0
+    SaleType: 0
+    State: 1
+    Loot:
+      Limits:
+        Coach: 1
+        Stadium: 1
+      Randomized:
+        - Count: 8
+          Weights:
+            Kit: 30
+            KitAlternative: 15
+            Badge: 45
+            Coach: 3
+            CoachRare: 2
+            Stadium: 4.9
+            StadiumRare: 0.1
+          Items:
+            - Category: Kit
+              CardType: Kit
+              Filters:
+                Alternative: false
+            - Category: KitAlternative
+              CardType: Kit
+              Filters:
+                Alternative: true
+            - Category: Badge
+              CardType: Badge
+            - Category: Coach
+              CardType: Coach
+              Filters:
+                Rare: 0
+            - Category: CoachRare
+              CardType: Coach
+              Filters:
+                Rare: 1
+            - Category: Stadium
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 0
+                  RangeEnd: 3
+            - Category: StadiumRare
+              CardType: Stadium
+              Filters:
+                Zcat:
+                  RangeStart: 4
+                  RangeEnd: 4

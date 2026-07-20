@@ -1,0 +1,19 @@
+# GameServerIp: 'auto' = automatically detect public IP or specify a manual IP address, where GameServer is run on
+# GameServerPort: Port for GameServer to listen on. (Redirector server lives on 42230, clients request there)
+# LogLevel: Valid values: Trace, Debug, Info, Warn, Error, Fatal, Off.
+# DatabaseConnectionString: Connection string to PostgreSQL, for saving data. (Not required)
+# HostRedirectorInstance: Whether this program should host a Redirector instance
+# ApiServerIdentifier and ApiServerPort: identifier and port where status is
+
+GameServerIp: 192.168.1.83
+GameServerPort: 16767
+LogLevel: Trace
+DatabaseConnectionString: Host=localhost;Port=5432;Username=postgres;Password=password;Database=zamboni
+HostRedirectorInstance: true
+ApiServerIdentifier: fifa19
+ApiServerPort: 8082
+TargetProtocol: FIFA19_PS3
+UseRelayServerImplementation: false
+Relays: {}
+Config: {}
+TopologyOverride: 0

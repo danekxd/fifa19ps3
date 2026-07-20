@@ -1,0 +1,104 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\UtilComponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Components\\Blaze\\UtilComponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Fifa19HttpRedirectorServer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Fifa19HttpRedirectorServer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Api\\Api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Api\\Api.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\RedirectorComponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Components\\Blaze\\RedirectorComponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Api.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Api\\Api.cs",
+              "RelativeDocumentMoniker": "Api\\Api.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Api\\Api.cs",
+              "RelativeToolTip": "Api\\Api.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:43:51.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UtilComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\UtilComponent.cs",
+              "RelativeDocumentMoniker": "Components\\Blaze\\UtilComponent.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\UtilComponent.cs",
+              "RelativeToolTip": "Components\\Blaze\\UtilComponent.cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAAcwLcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T14:41:10.065Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Fifa19HttpRedirectorServer.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Fifa19HttpRedirectorServer.cs",
+              "RelativeDocumentMoniker": "Fifa19HttpRedirectorServer.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Fifa19HttpRedirectorServer.cs",
+              "RelativeToolTip": "Fifa19HttpRedirectorServer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T13:22:27.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RedirectorComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\RedirectorComponent.cs",
+              "RelativeDocumentMoniker": "Components\\Blaze\\RedirectorComponent.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Components\\Blaze\\RedirectorComponent.cs",
+              "RelativeToolTip": "Components\\Blaze\\RedirectorComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T13:00:37.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Desktop\\fifa19\\Zamboni3\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T05:05:42.824Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

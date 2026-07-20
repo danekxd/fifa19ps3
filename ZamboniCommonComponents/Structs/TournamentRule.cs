@@ -1,0 +1,8 @@
+namespace ZamboniCommonComponents.Structs;
+
+public enum TournamentRule : int
+{
+    SEASONALPLAY_TOURNAMENTRULE_UNLIMITED = 1,
+    SEASONALPLAY_TOURNAMENTRULE_RETRY_ON_LOSS = 2,
+    SEASONALPLAY_TOURNAMENTRULE_ONE_ATTEMPT = 3
+}

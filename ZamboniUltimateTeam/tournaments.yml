@@ -1,0 +1,252 @@
+Tournaments:
+  - BlazeTournamentId: 0
+    TournamentId: 1
+    TrophyCardDbId: 8200000
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 1
+    Difficulty: 0
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 250
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 0
+
+  - BlazeTournamentId: 0
+    TournamentId: 2
+    TrophyCardDbId: 8200001
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 1
+    Difficulty: 0
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 300
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 1
+
+  - BlazeTournamentId: 0
+    TournamentId: 3
+    TrophyCardDbId: 8200002
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 2
+    Difficulty: 1
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 400
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 2
+
+  - BlazeTournamentId: 0
+    TournamentId: 4
+    TrophyCardDbId: 8200003
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 2
+    Difficulty: 1
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 550
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 3
+
+  - BlazeTournamentId: 0
+    TournamentId: 5
+    TrophyCardDbId: 8200004
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 3
+    Difficulty: 2
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 750
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 4
+
+  - BlazeTournamentId: 0
+    TournamentId: 6
+    TrophyCardDbId: 8200005
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 3
+    Difficulty: 2
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 800
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 5
+
+  - BlazeTournamentId: 0
+    TournamentId: 7
+    TrophyCardDbId: 8200006
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 4
+    Difficulty: 3
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 950
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 6
+
+  - BlazeTournamentId: 0
+    TournamentId: 8
+    TrophyCardDbId: 8200007
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 4
+    Difficulty: 3
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 1050
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 7
+
+  - BlazeTournamentId: 0
+    TournamentId: 9
+    TrophyCardDbId: 8200008
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 5
+    Difficulty: 4
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 1150
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 8
+
+  - BlazeTournamentId: 0
+    TournamentId: 10
+    TrophyCardDbId: 8200009
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 5
+    Difficulty: 4
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 1250
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 9
+
+  - BlazeTournamentId: 0
+    TournamentId: 11
+    TrophyCardDbId: 8200010
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 6
+    Difficulty: 5
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 1350
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 10
+
+  - BlazeTournamentId: 0
+    TournamentId: 12
+    TrophyCardDbId: 8200011
+    Type: 0
+    StartTime: 0
+    EndTime: 0
+    AiGroup: 7
+    Difficulty: 5
+    Elg1Type: 0
+    Elg1Data: 0
+    Elg2Type: 0
+    Elg2Data: 0
+    MatchLenght: 0
+    Prize: 1550
+    Reward1: 1000
+    Reward2: 1000
+    Reward3: 1000
+    Reward4: 1000
+    SalaryCap: 2500
+    TrophiesRequiredToEnter: 11

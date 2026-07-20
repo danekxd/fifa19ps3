@@ -1,0 +1,10 @@
+namespace ZamboniUltimateTeam.Structs;
+
+public enum CardLevel : int
+{
+    CARDHOUSE_CARDLEVEL_INVALID = 6,
+    CARDHOUSE_CARDLEVEL_BRONZE = 7,
+    CARDHOUSE_CARDLEVEL_SILVER = 8,
+    CARDHOUSE_CARDLEVEL_GOLD = 9,
+    CARDHOUSE_CARDLEVEL_ALL = 10,
+}

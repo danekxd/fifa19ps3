@@ -1,0 +1,123 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict VHctP95rL5yfYC6Szv2P5wuI7e7AbDsAq8rVF4chZsKML0zcjtXDLPwozEvm620
+
+-- Dumped from database version 18.3
+-- Dumped by pg_dump version 18.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: fcc12_trainingcards; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fcc12_trainingcards (
+    carddbid integer,
+    cardsubtype integer,
+    weightrare integer,
+    cardassetid integer,
+    description character varying,
+    amount integer,
+    rating integer,
+    attributeslot integer,
+    indexedconsumableid integer,
+    zcat integer
+);
+
+
+ALTER TABLE public.fcc12_trainingcards OWNER TO postgres;
+
+--
+-- Data for Name: fcc12_trainingcards; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.fcc12_trainingcards (carddbid, cardsubtype, weightrare, cardassetid, description, amount, rating, attributeslot, indexedconsumableid, zcat) FROM stdin;
+5003001	51	0	0	HIGH_ABBR3	3	75	0	1	0
+5003002	51	0	0	HIGH_ABBR3	4	75	0	2	1
+5003003	51	0	0	HIGH_ABBR3	5	75	0	3	2
+5003004	51	15	0	HIGH_ABBR3	7	75	0	4	3
+5003005	51	15	0	HIGH_ABBR3	9	75	0	5	4
+5003006	52	0	0	LOW_ABBR3	3	75	1	6	0
+5003007	52	0	0	LOW_ABBR3	4	75	1	7	1
+5003008	52	0	0	LOW_ABBR3	5	75	1	8	2
+5003009	52	15	0	LOW_ABBR3	7	75	1	9	3
+5003010	52	15	0	LOW_ABBR3	9	75	1	10	4
+5003011	53	0	0	QUICKNESS_ABBR3	3	75	2	11	0
+5003012	53	0	0	QUICKNESS_ABBR3	4	75	2	12	1
+5003013	53	0	0	QUICKNESS_ABBR3	5	75	2	13	2
+5003014	53	15	0	QUICKNESS_ABBR3	7	75	2	14	3
+5003015	53	15	0	QUICKNESS_ABBR3	9	75	2	15	4
+5003016	54	0	0	POSITIONING_ABBR3	3	75	3	16	0
+5003017	54	0	0	POSITIONING_ABBR3	4	75	3	17	1
+5003018	54	0	0	POSITIONING_ABBR3	5	75	3	18	2
+5003019	54	15	0	POSITIONING_ABBR3	7	75	3	19	3
+5003020	54	15	0	POSITIONING_ABBR3	9	75	3	20	4
+5003021	55	0	0	REBOUNDCONTROL_ABBR3	3	75	4	21	0
+5003022	55	0	0	REBOUNDCONTROL_ABBR3	4	75	4	22	1
+5003023	55	0	0	REBOUNDCONTROL_ABBR3	5	75	4	23	2
+5003024	55	15	0	REBOUNDCONTROL_ABBR3	7	75	4	24	3
+5003025	55	15	0	REBOUNDCONTROL_ABBR3	9	75	4	25	4
+5003026	56	15	0	ALL	2	75	-1	26	2
+5003027	56	10	0	ALL	3	75	-1	27	3
+5003028	56	5	0	ALL	5	75	-1	28	4
+5003029	57	0	2	SKATING_ABBR3	3	75	0	1	0
+5003030	57	0	2	SKATING_ABBR3	4	75	0	2	1
+5003031	57	0	2	SKATING_ABBR3	5	75	0	3	2
+5003032	57	100	2	SKATING_ABBR3	7	75	0	4	3
+5003033	57	100	2	SKATING_ABBR3	9	75	0	5	4
+5003034	58	0	2	SHOOTING_ABBR3	3	75	1	6	0
+5003035	58	0	2	SHOOTING_ABBR3	4	75	1	7	1
+5003036	58	0	2	SHOOTING_ABBR3	5	75	1	8	2
+5003037	58	100	2	SHOOTING_ABBR3	7	75	1	9	3
+5003038	58	100	2	SHOOTING_ABBR3	9	75	1	10	4
+5003039	59	0	2	HANDS_ABBR3	3	75	2	11	0
+5003040	59	0	2	HANDS_ABBR3	4	75	2	12	1
+5003041	59	0	2	HANDS_ABBR3	5	75	2	13	2
+5003042	59	100	2	HANDS_ABBR3	7	75	2	14	3
+5003043	59	100	2	HANDS_ABBR3	9	75	2	15	4
+5003044	60	0	2	CHECKING_ABBR3	3	75	3	16	0
+5003045	60	0	2	CHECKING_ABBR3	4	75	3	17	1
+5003046	60	0	2	CHECKING_ABBR3	5	75	3	18	2
+5003047	60	100	2	CHECKING_ABBR3	7	75	3	19	3
+5003048	60	100	2	CHECKING_ABBR3	9	75	3	20	4
+5003049	61	0	2	DEFENSE_ABBR3	3	75	4	21	0
+5003050	61	0	2	DEFENSE_ABBR3	4	75	4	22	1
+5003051	61	0	2	DEFENSE_ABBR3	5	75	4	23	2
+5003052	61	100	2	DEFENSE_ABBR3	7	75	4	24	3
+5003053	61	100	2	DEFENSE_ABBR3	9	75	4	25	4
+5003054	62	100	2	ALL	2	75	-1	26	2
+5003055	62	50	2	ALL	3	75	-1	27	3
+5003056	62	20	2	ALL	5	75	-1	28	4
+5003057	71	5	3	POS_RW_C	0	75	-1	0	3
+5003058	72	5	3	POS_C_RW	0	75	-1	2	3
+5003059	73	5	3	POS_LW_C	0	75	-1	0	3
+5003060	74	5	3	POS_C_LW	0	75	-1	1	3
+5003061	75	5	3	POS_RW_LW	0	75	-1	1	3
+5003062	76	5	3	POS_LW_RW	0	75	-1	2	3
+5003063	77	5	3	POS_RD_LD	0	75	-1	3	3
+5003064	78	5	3	POS_LD_RD	0	75	-1	4	3
+\.
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict VHctP95rL5yfYC6Szv2P5wuI7e7AbDsAq8rVF4chZsKML0zcjtXDLPwozEvm620
+

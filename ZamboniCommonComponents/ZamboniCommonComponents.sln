@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZamboniCommonComponents", "ZamboniCommonComponents.csproj", "{1DFE51DF-966B-41D0-9DEC-330574AC7202}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazeCommon", "..\BlazeSDK\BlazeCommon\BlazeCommon.csproj", "{23DF045F-1D17-4BA5-B4A9-3A36FDE749A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blaze3SDK", "..\BlazeSDK\Blaze3SDK\Blaze3SDK.csproj", "{3D541703-7999-4CF7-9BAB-CE9D0453E39D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DFE51DF-966B-41D0-9DEC-330574AC7202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DFE51DF-966B-41D0-9DEC-330574AC7202}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DFE51DF-966B-41D0-9DEC-330574AC7202}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DFE51DF-966B-41D0-9DEC-330574AC7202}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23DF045F-1D17-4BA5-B4A9-3A36FDE749A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DF045F-1D17-4BA5-B4A9-3A36FDE749A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DF045F-1D17-4BA5-B4A9-3A36FDE749A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DF045F-1D17-4BA5-B4A9-3A36FDE749A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D541703-7999-4CF7-9BAB-CE9D0453E39D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D541703-7999-4CF7-9BAB-CE9D0453E39D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D541703-7999-4CF7-9BAB-CE9D0453E39D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D541703-7999-4CF7-9BAB-CE9D0453E39D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
