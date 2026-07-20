@@ -114,23 +114,22 @@ namespace BlazeCommon
 
             try
             {
-                while (!_cancellationTokenSource
-                           .Token
-                           .IsCancellationRequested)
+                while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     Socket socket =
                         await _listenSocket.AcceptAsync(
                                 _cancellationTokenSource.Token)
                             .ConfigureAwait(false);
 
-                    _logger.Warn(
-                        "Socket accepted at {Time}, remote={Remote}",
-                        DateTime.Now.ToString("HH:mm:ss.fff"),
-                        socket.RemoteEndPoint);
+                    Console.WriteLine(
+                        $"[{DateTime.Now:HH:mm:ss.fff}] " +
+                        $"Socket accepted, remote={socket.RemoteEndPoint}");
 
                     long clientId =
-                        Interlocked.Increment(
-                            ref _nextConnectionId);
+                        Interlocked.Increment(ref _nextConnectionId);
+
+                    Console.WriteLine(
+                       $"[{DateTime.Now:HH:mm:ss.fff}] Before constructor");
 
                     ProtoFireConnection connection =
                         new ProtoFireConnection(
@@ -138,9 +137,16 @@ namespace BlazeCommon
                             this,
                             socket);
 
+                    Console.WriteLine(
+                       $"[{DateTime.Now:HH:mm:ss.fff}] After constructor");
+
                     await OnProtoFireConnectInternalAsync(
                             connection)
                         .ConfigureAwait(false);
+
+                    Console.WriteLine(
+                       $"[{DateTime.Now:HH:mm:ss.fff}] After connect initialization");
+
                 }
             }
             catch (OperationCanceledException)

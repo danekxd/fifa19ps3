@@ -30,7 +30,7 @@ namespace BlazeCommon
 
         public ProtoFireFraming Framing { get; set; }
 
-        private static readonly SemaphoreSlim Semaphore =
+        private readonly SemaphoreSlim _sendLock =
             new SemaphoreSlim(1, 1);
 
         public ProtoFireConnection(
@@ -449,7 +449,7 @@ namespace BlazeCommon
                     "Stream is not set");
 
             bool success = false;
-            Semaphore.Wait();
+            _sendLock.Wait();
 
             try
             {
@@ -484,7 +484,7 @@ namespace BlazeCommon
                     "Stream is not set");
 
             bool success = false;
-            await Semaphore.WaitAsync().ConfigureAwait(false);
+            await _sendLock.WaitAsync();.ConfigureAwait(false);
 
             try
             {
@@ -506,7 +506,7 @@ namespace BlazeCommon
             }
             finally
             {
-                Semaphore.Release();
+                _sendLock.Release();
             }
 
             return success;
