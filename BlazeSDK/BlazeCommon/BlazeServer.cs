@@ -78,8 +78,6 @@ namespace BlazeCommon
             {
                 case FireFrame.MessageType.MESSAGE:
                     type = component.GetCommandRequestType(frame.Command);
-                    Console.WriteLine(
-    $"[{DateTime.Now:HH:mm:ss.fff}] Processing Component={message.Component} Command={message.Command}");
                     break;
                 case FireFrame.MessageType.REPLY:
                     type = component.GetCommandResponseType(frame.Command);
@@ -120,6 +118,18 @@ namespace BlazeCommon
     ProtoFirePacket packet)
         {
             FireFrame frame = packet.Frame;
+
+            _logger.Warn(
+    "Dispatching packet at {Time}: " +
+    "connection={ConnectionId}, " +
+    "type={Type}, component={Component}, " +
+    "command={Command}, id={MessageId}",
+    DateTime.Now.ToString("HH:mm:ss.fff"),
+    connection.ID,
+    frame.MsgType,
+    frame.Component,
+    frame.Command,
+    frame.MsgNum);
 
             if (frame.MsgType == FireFrame.MessageType.PING)
             {

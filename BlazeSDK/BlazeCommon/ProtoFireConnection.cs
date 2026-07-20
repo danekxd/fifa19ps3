@@ -90,12 +90,6 @@ namespace BlazeCommon
             if (!Connected)
                 return null;
 
-            Console.WriteLine(
-    $"[{DateTime.Now:HH:mm:ss.fff}] Waiting for Fire2 header...");
-
-            Console.WriteLine(
-    $"[{DateTime.Now:HH:mm:ss.fff}] Fire2 header received.");
-
             if (Stream == null)
                 throw new InvalidOperationException(
                     "Stream is not set");
@@ -220,9 +214,12 @@ namespace BlazeCommon
         }
 
         private static async Task<ProtoFirePacket?>
-            ReadFire2PacketAsync(Stream stream)
+    ReadFire2PacketAsync(Stream stream)
         {
             byte[] header = new byte[Fire2HeaderSize];
+
+            Console.WriteLine(
+                $"[{DateTime.Now:HH:mm:ss.fff}] Waiting for Fire2 header...");
 
             if (!await stream.ReadAllAsync(
                     header,
@@ -233,10 +230,12 @@ namespace BlazeCommon
                 return null;
             }
 
+            Console.WriteLine(
+                $"[{DateTime.Now:HH:mm:ss.fff}] Fire2 header received.");
+
             Fire2Header parsed = ParseFire2Header(header);
 
-            byte[] metadata =
-                new byte[parsed.MetadataSize];
+            byte[] metadata = new byte[parsed.MetadataSize];
 
             if (!await stream.ReadAllAsync(
                     metadata,

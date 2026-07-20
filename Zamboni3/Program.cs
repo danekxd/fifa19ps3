@@ -31,32 +31,44 @@ internal class Program
 
     private static ZamboniCoreServer core;
 
-    ThreadPool.GetMinThreads(
-    out int workerThreads,
-    out int completionPortThreads);
-
-    ThreadPool.SetMinThreads(
-        Math.Max(workerThreads, 16),
-    Math.Max(completionPortThreads, 16));
-
-Console.WriteLine("ThreadPool minimum threads set.");
-
     private static async Task Main(string[] args)
     {
+        ThreadPool.GetMinThreads(
+            out int workerThreads,
+            out int completionPortThreads);
+
+        ThreadPool.SetMinThreads(
+            Math.Max(workerThreads, 16),
+            Math.Max(completionPortThreads, 16));
+
+        Console.WriteLine("ThreadPool minimum threads set.");
+
         InitConfig();
         StartLogger();
         InitDatabase();
-        GameServerIp = ZamboniConfig.GameServerIp.Equals("auto") ? PublicIp : ZamboniConfig.GameServerIp;
+
+        GameServerIp = ZamboniConfig.GameServerIp.Equals("auto")
+            ? PublicIp
+            : ZamboniConfig.GameServerIp;
 
         var tasks = new List<Task>();
 
         tasks.Add(Task.Run(StartCommandListener));
-        ProtoFireConnection.DefaultFraming = ProtoFireFraming.Fire2;
+
+        ProtoFireConnection.DefaultFraming =
+            ProtoFireFraming.Fire2;
+
         tasks.Add(StartCoreServer());
         tasks.Add(new Api().StartAsync());
-        if (ZamboniConfig.HostRedirectorInstance) tasks.Add(StartRedirectorServer());
-        await RelayCommunicator.ResetAllInstances([ZamboniConfig.TargetProtocol]);
+
+        if (ZamboniConfig.HostRedirectorInstance)
+            tasks.Add(StartRedirectorServer());
+
+        await RelayCommunicator.ResetAllInstances(
+            [ZamboniConfig.TargetProtocol]);
+
         Logger.Warn(Name + " started");
+
         await Task.WhenAll(tasks);
     }
 

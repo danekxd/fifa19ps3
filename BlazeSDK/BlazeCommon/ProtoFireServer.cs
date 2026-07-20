@@ -84,13 +84,15 @@ namespace BlazeCommon
                 while (!_cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     Socket socket = await _listenSocket.AcceptAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
-                    Console.WriteLine(
-    $"[{DateTime.Now:HH:mm:ss.fff}] SOCKET ACCEPTED from {socket.RemoteEndPoint}");
+                    
+                    _logger.Warn(
+    "Socket accepted at {Time}, remote={Remote}",
+    DateTime.Now.ToString("HH:mm:ss.fff"),
+    socket.RemoteEndPoint);
+                    
                     long clientId = Interlocked.Increment(ref _nextConnectionId);
 
                     ProtoFireConnection connection = new ProtoFireConnection(clientId, this, socket);
-                    Console.WriteLine(
-    $"[{DateTime.Now:HH:mm:ss.fff}] Creating ProtoFireConnection");
                     await OnProtoFireConnectInternalAsync(connection).ConfigureAwait(false);
                 }
             }
