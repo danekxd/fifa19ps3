@@ -139,8 +139,16 @@ namespace BlazeCommon
                 connection.SetStream(stream);
 
                 if (Secure)
-                    _logger.Info("Authenticated as server for connection({ClientId}). Stream type: {StreamType}", connection.ID, stream.GetType().Name);
-            }
+                {
+                    _logger.Info(
+                        "Authenticated as server for connection({ClientId}). " +
+                        "Stream type: {StreamType}",
+                        connection.ID,
+                        stream.GetType().Name);
+                }
+
+                await RunReceiveLoopAsync(connection)
+                    .ConfigureAwait(false);
             catch (Exception ex)
             {
                 _logger.Error(ex, "Failed to authenticate as server for connection({ClientId}).", connection.ID);
@@ -165,14 +173,32 @@ namespace BlazeCommon
 
         public ValueTask KillConnectionAsync(ProtoFireConnection connection)
         {
-            if (connection.Connected)
+            if (!connection.Connected)
+                return;
+
+            if (Secure)
             {
-                connection.Disconnect(); //will call this method again after disconnect
-                return ValueTask.CompletedTask;
+                _logger.Info(
+                    "Authenticating as server for connection({ClientId}).",
+                    connection.ID);
+
+                SslSocket.BeginAuthenticateAsServer(
+                    connection.Socket,
+                    Certificate!,
+                    ForceSsl,
+                    AuthenticateAsServerCallback,
+                    connection);
+
+                return;
             }
 
-            return OnProtoFireDisconnectInternalAsync(connection);
-        }
+            // Plaintext Blaze core connection.
+            connection.SetStream(
+                new NetworkStream(
+                    connection.Socket,
+                    ownsSocket: true));
+
+            _ = RunReceiveLoopAsync(connection);
 
         private async ValueTask OnProtoFireConnectInternalAsync(ProtoFireConnection connection)
         {
@@ -231,6 +257,37 @@ namespace BlazeCommon
                 //an error occured while handling an error, doesnt sound good...
                 await OnProtoFireErrorInternalAsync(connection, ex).ConfigureAwait(false);
             }
+        }
+
+        private async Task RunReceiveLoopAsync(
+    ProtoFireConnection connection)
+        {
+            while (IsRunning && connection.Connected)
+            {
+                ProtoFirePacket? packet =
+                    await connection.ReadPacketAsync()
+                        .ConfigureAwait(false);
+
+                if (packet == null)
+                    break;
+
+                try
+                {
+                    await OnProtoFirePacketReceivedAsync(
+                            connection,
+                            packet)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    await OnProtoFireErrorInternalAsync(
+                            connection,
+                            ex)
+                        .ConfigureAwait(false);
+                }
+            }
+
+            connection.Disconnect();
         }
 
         public abstract Task OnProtoFireConnectAsync(ProtoFireConnection connection);
